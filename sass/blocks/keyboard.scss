@@ -30,11 +30,6 @@
   }
 }
 
-.keyboard__key--active {
-  transform: scale(1.1);
-  background-color: Turquoise;
-}
-
 .keyboard__key--big {
   width: 110px;
 }
@@ -45,4 +40,9 @@
 
 .keyboard__key--dark {
   background-color: LightSeaGreen;
+}
+
+.keyboard__key.keyboard__key--pressed {
+  transform: scale(1.1);
+  background-color: Aquamarine;
 }
