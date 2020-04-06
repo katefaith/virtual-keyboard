@@ -42,6 +42,10 @@
   background-color: LightSeaGreen;
 }
 
+.keyboard__key.keyboard__key--active {
+  background-color: Aquamarine;
+}
+
 .keyboard__key.keyboard__key--pressed {
   transform: scale(1.1);
   background-color: Aquamarine;
