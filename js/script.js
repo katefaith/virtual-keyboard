@@ -9,7 +9,7 @@ const data = [
     text: ['2', '@', '2', '"'], keyCode: 'Digit2',
   },
   {
-    text: ['3', '@', '3', '№'], keyCode: 'Digit3',
+    text: ['3', '#', '3', '№'], keyCode: 'Digit3',
   },
   {
     text: ['4', '$', '4', ';'], keyCode: 'Digit4',
@@ -265,11 +265,17 @@ function changeKeyboardLayout(type) {
 function keypressHandler(id, input) {
   const textarea = document.querySelector('.textarea');
   const curPos = textarea.selectionStart;
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
   textarea.focus();
 
   switch (id) {
     case 'Backspace':
-      if (!curPos) {
+      if (end === start && start === 0) {
+        break;
+      }
+      if (end > start) {
+        textarea.setRangeText('');
         break;
       }
       textarea.value = textarea.value.slice(0, curPos - 1) + textarea.value.slice(curPos);
@@ -277,11 +283,14 @@ function keypressHandler(id, input) {
       textarea.selectionEnd = curPos - 1;
       break;
     case 'Tab':
-      textarea.value = `${textarea.value.slice(0, curPos)}    ${textarea.value.slice(curPos)}`;
+      textarea.setRangeText('    ');
       textarea.selectionStart = curPos + 4;
-      textarea.selectionEnd = curPos + 4;
       break;
     case 'Delete':
+      if (end > start) {
+        textarea.setRangeText('');
+        break;
+      }
       textarea.value = textarea.value.slice(0, curPos) + textarea.value.slice(curPos + 1);
       textarea.selectionStart = curPos;
       textarea.selectionEnd = curPos;
@@ -295,9 +304,8 @@ function keypressHandler(id, input) {
       }
       break;
     case 'Enter':
-      textarea.value = `${textarea.value.slice(0, curPos)}\n${textarea.value.slice(curPos)}`;
+      textarea.setRangeText('\n');
       textarea.selectionStart = curPos + 1;
-      textarea.selectionEnd = curPos + 1;
       break;
     case 'ShiftLeft':
     case 'ShiftRight':
@@ -314,9 +322,8 @@ function keypressHandler(id, input) {
     case 'MetaLeft':
       break;
     default:
-      textarea.value = textarea.value.slice(0, curPos) + input + textarea.value.slice(curPos);
+      textarea.setRangeText(input);
       textarea.selectionStart = curPos + 1;
-      textarea.selectionEnd = curPos + 1;
       break;
   }
 
@@ -334,6 +341,8 @@ function keypressHandler(id, input) {
 }
 
 function keyUnpressHandler(id) {
+  const textarea = document.querySelector('.textarea');
+  textarea.focus();
   switch (id) {
     case 'ShiftLeft':
     case 'ShiftRight':
