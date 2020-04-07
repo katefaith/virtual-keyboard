@@ -393,17 +393,17 @@ function mouseDownHandler(e) {
 }
 
 function mouseUpHandler(e) {
-  if (e.target.classList.contains('keyboard__key')) {
-    document.querySelectorAll('.keyboard__key').forEach((key) => {
-      key.classList.remove('keyboard__key--pressed');
-    });
-  }
+  document.querySelectorAll('.keyboard__key').forEach((key) => {
+    key.classList.remove('keyboard__key--pressed');
+  });
 
-  const id = e.target.getAttribute('id');
-  keyUnpressHandler(id);
+  if (e.target.classList.contains('keyboard__key')) {
+    const id = e.target.getAttribute('id');
+    keyUnpressHandler(id);
+  }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', () => {
   const section = document.createElement('section');
   section.classList.add('virtual-keyboard');
   document.body.prepend(section);
@@ -452,5 +452,5 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', keyDownHandler);
   document.addEventListener('keyup', keyUpHandler);
   keyboard.addEventListener('mousedown', mouseDownHandler);
-  keyboard.addEventListener('mouseup', mouseUpHandler); // исправить баг
+  document.addEventListener('mouseup', mouseUpHandler);
 });

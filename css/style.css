@@ -41,6 +41,11 @@
 
   background-color: DarkCyan;
   border-radius: 10px;
+
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .keyboard__key {
