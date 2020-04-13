@@ -12,5 +12,6 @@ module.exports = {
         "ecmaVersion": 2018
     },
     "rules": {
+        "import/extensions" : ["error", 'ignorePackages', { js: 'always' }]
     }
 };
